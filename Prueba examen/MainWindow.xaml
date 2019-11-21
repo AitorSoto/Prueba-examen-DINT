@@ -77,13 +77,13 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0">Dia</TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}" Text="{Binding Dia}"></TextBox>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Dia}">Prediccion</TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}" Text="{Binding Prediccion}"></TextBox>
                 <TextBlock Grid.Row="2" Grid.Column="0">Minima</TextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBox Grid.Row="2" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}" Text="{Binding MinimaFarenheit}"></TextBox>
                 <TextBlock Grid.Row="3" Grid.Column="0">Maxima</TextBlock>
-                <TextBox Grid.Row="3" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}" Text="{Binding MaximaFarenheit}"></TextBox>
             </Grid>
             <Grid>
                 <Image Stretch="Fill" Style="{StaticResource cambiaFondo}"></Image>
