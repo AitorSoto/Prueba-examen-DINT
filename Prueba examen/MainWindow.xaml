@@ -1,0 +1,93 @@
+﻿<Window x:Class="Prueba_examen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prueba_examen"
+        mc:Ignorable="d"
+        Title="Tiempo en New York" Height="450" Width="800" Icon="sun_weather.ico">
+    <Window.Resources>
+        <local:ConverterImagen x:Key="conversorImagen"></local:ConverterImagen>
+        <local:ConvertidorMaximoTemperatura x:Key="ConvertidorMaximoTemperatura"></local:ConvertidorMaximoTemperatura>
+        <local:ConvertidorMinimoTemperatura x:Key="ConvertidorMinimoTemperatura"></local:ConvertidorMinimoTemperatura>
+        
+        <Style TargetType="TextBlock" x:Key="tituloApp">
+            <Setter Property="FontFamily" Value="Segoe UI Black"></Setter>
+            <Setter Property="FontSize" Value="48"></Setter>
+        </Style>
+        <Style TargetType="Image" x:Key="cambiaFondo">
+            <Setter Property="Source" Value="newyork1.jpg"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Source" Value="newyork2.jpg"></Setter> 
+                </Trigger>
+            </Style.Triggers> 
+        </Style>
+        <ControlTemplate x:Key="TextBoxControlTemplateExamen" TargetType="{x:Type TextBox}">
+            <Border x:Name="border" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <DockPanel x:Name="principalDockPanel" LastChildFill="True">
+            <ScrollViewer>
+                <ListBox DockPanel.Dock="Left" Width="120" ItemsSource="{Binding}" x:Name="listaListBox">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock x:Name="DiaTextBlock" Text="{Binding Dia}"></TextBlock>
+                                <Image x:Name="TiempoImage" Source="{Binding Prediccion, Converter={StaticResource conversorImagen}}"></Image>
+                                <TextBlock x:Name="TemperaturaTextBlock">
+                                    <Run Text="{Binding MinimaFarenheit, Converter={StaticResource ConvertidorMinimoTemperatura}}"></Run>
+                                    <Run>°/</Run>
+                                    <Run Text="{Binding MaximaFarenheit, Converter={StaticResource ConvertidorMaximoTemperatura}}"></Run>
+                                    <Run>°</Run>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock x:Name="tituloTextBlock" Style="{StaticResource tituloApp}">El tiempo en New York</TextBlock>
+            </StackPanel>
+            <Grid DockPanel.Dock="Bottom" DataContext="{Binding ElementName=listaListBox, Path=SelectedItem}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0">Dia</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Dia}">Prediccion</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBlock Grid.Row="2" Grid.Column="0">Minima</TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+                <TextBlock Grid.Row="3" Grid.Column="0">Maxima</TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="1" Template="{DynamicResource TextBoxControlTemplateExamen}"></TextBox>
+            </Grid>
+            <Grid>
+                <Image Stretch="Fill" Style="{StaticResource cambiaFondo}"></Image>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
